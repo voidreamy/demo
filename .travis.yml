@@ -13,8 +13,8 @@ before_deploy:
   - ssh-add /tmp/deploy_rsa
 deploy:
   provider: script
+  script: scripts/deploy.sh
   skip_cleanup: true
-  script: scp /home/travis/build/voidreamy/demo/target/demo-0.0.1-SNAPSHOT.war $DEPLOY_USER@$DEPLOY_HOST:DEPLOY_PATH
   on:
     branch: master
 env:
