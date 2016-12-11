@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "commit: $TRAVIS_COMMIT"
 ARTIFACT="demo-0.0.1-SNAPSHOT.war"
 ssh $DEPLOY_USER@$DEPLOY_HOST "mv $DEPLOY_PATH/$ARTIFACT $DEPLOY_PATH/$ARTIFACT.old"
 scp "$HOME/build/voidreamy/demo/target/$ARTIFACT" $DEPLOY_USER@$DEPLOY_HOST:$DEPLOY_PATH
