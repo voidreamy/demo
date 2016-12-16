@@ -28,4 +28,5 @@ deploy:
   bundle_type: zip
   application: DemoApp
   deployment_group: DemoDeploymentGroup
+  region: ap-northeast-2
   on: *2
