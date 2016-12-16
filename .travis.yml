@@ -9,7 +9,7 @@ before_deploy:
   - cp target/demo-0.0.1-SNAPSHOT.war tmp_for_upload/
   - cp -r deploy/* tmp_for_upload/
   - mkdir -p demo_upload
-  - cd tmp_for_upload && zip -r ../demo_upload/demo-${TRAVIS_COMMIT:0:6} *
+  - cd tmp_for_upload && zip -r ../demo_upload/demo-${TRAVIS_COMMIT:0:6} * && cd ..
 deploy:
   - provider: s3
     access_key_id: AKIAJV5LVYTXTVE367GQ
