@@ -1,32 +1,31 @@
 language: java
 jdk: oraclejdk8
 services:
-- mysql
+  - mysql
 before_script:
-- mysql -utravis -e "create database demo"
+  - mysql -utravis -e "create database demo"
 before_deploy:
-- zip -r demo-${TRAVIS_COMMIT:0:6} target/demo-0.0.1-SNAPSHOT.war deploy
-- mkdir -p demo_upload
-- mv demo-${TRAVIS_COMMIT:0:6}.zip demo_upload/
+  - zip -r demo-${TRAVIS_COMMIT:0:6} target/demo-0.0.1-SNAPSHOT.war deploy
+  - mkdir -p demo_upload
+  - mv demo-${TRAVIS_COMMIT:0:6}.zip demo_upload/
 deploy:
-  provider: s3
-  access_key_id: AKIAJV5LVYTXTVE367GQ
-  secret_access_key: &1
-    secure: OLK3uakGB8hofyXUgFgEVfHN3JLI8n+wijc3YwV46VWDZJpDlUTCmjfoyY/Xi35yfB+EoAsQrI9cwVTi0sR4PS3h7E/8ZcHcTh25osSyjdwGzdfdR4bBHpMobOvorxId9gTrKKMNaXeDdJZfmAhWuC7icJvgRchlZGGnFkSSvJnp0DlhPF+eX0AjZt7I8kPOEVikGdkhRodzDewAm9advZIXyK5Nm+Wf0lN/D6OthMmZU4hDtvfoNJUTz7u6p1VhHVhpkdD4GFpd/bqp+mpkzxtRWah+8zVDYB5ZIxhkWKKbWZEbNs1IBug7NsR9OkerLGjHxCZWKkbMJGSHJCisL91Ib/7sTpBLuLySSJM0DDzwJCHCCS9gGt1dUpDQUc5HvMB11Bafu7DhvW1NjdYsvtCR+cDIfYVR51GZI7395zkRul1V//NtUpE6i0Er/Fa4Y74ucDor9ors+nlrFFFpcJURmHHFnOtX6yQFDtTSeZenZqLUjpAeC1HgeI1JP6oVEZDNxGoTzJEew5WcNeVM8hSqyZlE5NVL3oyXiB/TMhMWWUnIPE1gEDuiG9bYCIPw9vYg89HJCdqF8qI5O4Zs0YBiayMi6KVqP11bw8FqbK++8YnpQze4MxBzXuzjPaBZ3RagQ8uaVnbLkJmr6mmc5RwRwXeApUzPz9PbugSWfho=
-  local_dir: demo_upload
-  bucket: voidreamy
-  region: ap-northeast-2
-  skip_cleanup: true
-  on: &2
-    branch: master
-deploy:
-  provider: codedeploy
-  access_key_id: AKIAJV5LVYTXTVE367GQ
-  secret_access_key: *1
-  bucket: voidreamy
-  key: demo-${TRAVIS_COMMIT:0:6}.zip
-  bundle_type: zip
-  application: DemoApp
-  deployment_group: DemoDeploymentGroup
-  region: ap-northeast-2
-  on: *2
+  - provider: s3
+    access_key_id: AKIAJV5LVYTXTVE367GQ
+    secret_access_key: &1
+      secure: OLK3uakGB8hofyXUgFgEVfHN3JLI8n+wijc3YwV46VWDZJpDlUTCmjfoyY/Xi35yfB+EoAsQrI9cwVTi0sR4PS3h7E/8ZcHcTh25osSyjdwGzdfdR4bBHpMobOvorxId9gTrKKMNaXeDdJZfmAhWuC7icJvgRchlZGGnFkSSvJnp0DlhPF+eX0AjZt7I8kPOEVikGdkhRodzDewAm9advZIXyK5Nm+Wf0lN/D6OthMmZU4hDtvfoNJUTz7u6p1VhHVhpkdD4GFpd/bqp+mpkzxtRWah+8zVDYB5ZIxhkWKKbWZEbNs1IBug7NsR9OkerLGjHxCZWKkbMJGSHJCisL91Ib/7sTpBLuLySSJM0DDzwJCHCCS9gGt1dUpDQUc5HvMB11Bafu7DhvW1NjdYsvtCR+cDIfYVR51GZI7395zkRul1V//NtUpE6i0Er/Fa4Y74ucDor9ors+nlrFFFpcJURmHHFnOtX6yQFDtTSeZenZqLUjpAeC1HgeI1JP6oVEZDNxGoTzJEew5WcNeVM8hSqyZlE5NVL3oyXiB/TMhMWWUnIPE1gEDuiG9bYCIPw9vYg89HJCdqF8qI5O4Zs0YBiayMi6KVqP11bw8FqbK++8YnpQze4MxBzXuzjPaBZ3RagQ8uaVnbLkJmr6mmc5RwRwXeApUzPz9PbugSWfho=
+    local_dir: demo_upload
+    bucket: voidreamy
+    region: ap-northeast-2
+    skip_cleanup: true
+    on: &2
+      branch: master
+  - provider: codedeploy
+    access_key_id: AKIAJV5LVYTXTVE367GQ
+    secret_access_key: *1
+    bucket: voidreamy
+    key: demo-${TRAVIS_COMMIT:0:6}.zip
+    bundle_type: zip
+    application: DemoApp
+    deployment_group: DemoDeploymentGroup
+    region: ap-northeast-2
+    on: *2
