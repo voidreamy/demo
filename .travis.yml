@@ -5,9 +5,11 @@ services:
 before_script:
   - mysql -utravis -e "create database demo"
 before_deploy:
-  - zip -r demo-${TRAVIS_COMMIT:0:6} target/demo-0.0.1-SNAPSHOT.war deploy
+  - mkdir -p tmp_for_upload
+  - cp target/demo-0.0.1-SNAPSHOT.war tmp_for_upload/
+  - cp -r deploy/* tmp_for_upload/
   - mkdir -p demo_upload
-  - mv demo-${TRAVIS_COMMIT:0:6}.zip demo_upload/
+  - cd tmp_for_upload && zip -r ../demo_upload/demo-${TRAVIS_COMMIT:0:6} *
 deploy:
   - provider: s3
     access_key_id: AKIAJV5LVYTXTVE367GQ
