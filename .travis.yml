@@ -19,3 +19,13 @@ deploy:
   skip_cleanup: true
   on: &2
     branch: master
+deploy:
+  provider: codedeploy
+    access_key_id: AKIAJV5LVYTXTVE367GQ
+    secret_access_key: *1
+    bucket: voidreamy
+    key: demo-${TRAVIS_COMMIT:0:6}.zip
+    bundle_type: zip
+    application: DemoApp
+    deployment_group: DemoDeploymentGroup
+    on: *2
